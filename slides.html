@@ -27,22 +27,15 @@
 		<script src="plugin/highlight/highlight.js"></script>
 		<script>
 			function decodeJsonDataCookie() {
-				// Get the cookie value
 				const cookieValue = document.cookie.replace(/(?:(?:^|.*;)jsonData=([^;]*))|(?:^.*)$/, "$1");
 
-				// Check if cookie exists
 				if (!cookieValue) {
 					return null;
 				}
 
 				try {
-					// Decode the base64 string
 					const decodedString = atob(cookieValue);
-
-					// Parse the decoded string as JSON
 					const jsonData = JSON.parse(decodedString);
-
-					// Return the parsed JSON data
 					return jsonData;
 				} catch (error) {
 					console.error("Error decoding jsonData cookie:", error);
@@ -50,65 +43,63 @@
 				}
 			}
 
+			function htmlEncode(str) {
+				let tempDiv = document.createElement('div');
+				tempDiv.innerText = str;
+				return tempDiv.innerHTML;
+			}
+
 			let slidesList = decodeJsonDataCookie();
-			// Assuming the JSON array is available in a variable named 'slidesList'
-			// Assuming the JSON array is available in a variable named 'slidesList'
 			let slidesDiv = document.getElementById("slides");
 
 			for (const slideData of slidesList) {
-				// Create question slide section
 				let wholeSection = document.createElement("section");
 				let questionSection = document.createElement("section");
-				questionSection.classList.add("slide"); // Add a class for styling
+				questionSection.classList.add("slide");
 
-				// Add question content
-				questionSection.innerHTML = `
-					<h2>${slideData.question}</h2>
-					<p style="font-size: 0.5em; color: grey">${slideData.category} / ${slideData.type}</p>
+				let number = 1;
+				if (slideData.question.length >= 120) number = 2;
+				let questionHtml = `
+				<div>
+					<h2 style="font-size: calc(50vh / calc(18 * ${number}))">${htmlEncode(slideData.question)}</h2>
+					<p style="font-size: 0.5em; color: grey">${htmlEncode(slideData.category)} / ${htmlEncode(slideData.type)}</p>
+				</div>
+				<div class="${slideData.options ? "fragment" : ""}">
 					<ul>`;
-				for (const option of slideData.options) {
-					questionSection.innerHTML += `<li>${option}</li>`;
+				if (slideData.options) {
+					for (const option of slideData.options) {
+						questionHtml += `<li>${htmlEncode(option)}</li>`;
+					}
 				}
-				questionSection.innerHTML += `</ul>`;
+				questionHtml += `</ul></div>`;
+				questionSection.innerHTML = questionHtml;
 
 				wholeSection.appendChild(questionSection);
 
-				// Create answer slide section
 				let answerSection = document.createElement("section");
-				answerSection.classList.add("slide"); // Add a class for styling
+				answerSection.classList.add("slide");
 
-				// Add answer content
 				answerSection.innerHTML = `
 					<h2>Answer</h2>
-					<p><b>${slideData.answer}</b></p>
-					<p><i>(${slideData.explanation_answer})</i></p>
+					<p><b>${htmlEncode(slideData.answer)}</b></p>
+					<p><i>(${htmlEncode(slideData.explanation_answer)})</i></p>
 				  `;
 
 				wholeSection.appendChild(answerSection);
 				slidesDiv.appendChild(wholeSection);
 			}
 
-			// Style the slides (optional)
-			let slides = document.querySelectorAll(".slide");
-			slides.forEach(slide => {
-				//nothing
-			});
-
 			let sectionEnd = document.createElement("section");
-			sectionEnd.innerHTML =`
+			sectionEnd.innerHTML = `
 			<a href="/index.html" class="btn btn-primary text-white">Play again</a>
-			`
+			`;
 			slidesDiv.appendChild(sectionEnd);
 
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
 			Reveal.initialize({
 				hash: true,
-
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+				plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
 			});
 		</script>
+
 	</body>
 </html>

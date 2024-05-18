@@ -38,6 +38,9 @@
     </code>
 </div>
 <script>
+    function removeNonLatin1Chars(str) {
+        return str.replace(/[^\x00-\xFF]/g, '');
+    }
     const form = document.getElementById('jsonForm');
     form.addEventListener('submit', (event) => {
         event.preventDefault(); // Prevent default form submission
@@ -53,7 +56,7 @@
         }
 
         // Set cookie with JSON data
-        document.cookie = `jsonData=${btoa(jsonData)}; path=/;`;
+        document.cookie = `jsonData=${btoa(removeNonLatin1Chars(jsonData))}; path=/;`;
 
         // Redirect to /slides.html
         window.location.href = "/slides.html";
