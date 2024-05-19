@@ -8,8 +8,59 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 <body>
 <div class="container mt-3">
-    <h1 class="text-center mb-4">Enter your JSON data</h1>
-    <form action="/slides.html" method="get" id ="jsonForm">
+    <h1 class="text-center mb-4">Play pub quiz with a chat bot</h1>
+    <p>This website generates a pub quiz with questions from a chatbot like <a href="https://chatgpt.com/">Chat GPT</a> or <a href="https://gemini.google.com/">Gemini</a>. The Website uses the JSON Data format. But do not worry, you do not have to understand any of this, just copy here what the chatbot gave you as an answer. You can use the example prompt below. Adjust the end of the prompt to set your own categories.</p>
+    <button type="button" class="btn btn-primary" id="copyButton">Copy Prompt</button>
+    <div class="accordion accordion-flush p-2 ps-0 pb-5" id="accordionFlushExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header text-bg-light">
+                <button class="accordion-button collapsed text-bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    See example prompt
+                </button>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <code style="white-space: pre-wrap;" id="prompt">
+You are generating question for a pub quiz. The questions should be hard.
+
+General rules:
+Make sure the question does not contain the answer!
+Be creative.
+Answer only with the json needed for the pub quiz programm.
+Everything in English apart from names.
+Always provide the "answer" attribute of the json.
+Never should the answer be the German translation of something english in the question.
+Question do not need to the related to Germany.
+
+Generate 3 Types of pub quiz questions.
+
+Type: Multiple Choice
+Provide 4 choices to pick from. Make the questions hard. The participants also have the options.
+Example JSON: { "category": "General Knowledge", "question": "Which country has the most UNESCO World Heritage Sites?", "type": "Multiple Choice", "options": [ "Italy", "Spain", "China", "Greece" ], "answer": "China", "explanation_answer": "China has 56 UNESCO World Heritage Sites, the most of any country. Italy follows with 55 sites, then Spain with 49, and Greece with 18." }
+
+Type: Guessing Question
+Do not provide options. Let the people guess interesting numbers/dates. Choose dates or numbers that are not normally known by heart.
+Example JSON: { "category": "Cologne", "question": "When was Cologne Cathedral's construction started?", "type": "Guessing Question", "answer": "1248", "explanation_answer": "The foundation stone was laid on Saturday, 15 August 1248, by Archbishop Konrad von Hochstaden" }
+
+Type: Free Answer
+Like Multiple Choice just do not provide options. The answer to the question should be short. A concept, name, event, year, number or similar.
+Example JSON: { "category": "Tech", "question": "What US state is Silicon Valley in?", "type": "Free Answer", "answer": "California", "explanation_answer": "Silicon Valley is a region in Northern California that is a global center for high technology and innovation." }
+
+Generate a JSON List!
+Use all question types, select the question type that fits best.
+Generate questions for the following categories, one each:
+- Bonn's history
+- Computer Science (expert question)
+- Chemistry (expert question)
+- Drinks
+- Food
+                    </code>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form action="/slides.html" method="get" id ="jsonForm" class="pb-5">
         <div class="form-group mb-3">
             <label for="jsonData">JSON Data</label>
             <textarea name="jsonData" id="jsonData" rows="10" class="form-control" placeholder="Paste your JSON data here"></textarea>
@@ -18,25 +69,24 @@
             <button type="submit" class="btn btn-primary">Convert to Slides</button>
         </div>
     </form>
-    <p>A json in the following format is needed:</p>
-    <code>
-        [
-            {
-                "category": "General Knowledge",
-                "question": "Which country has the most UNESCO World Heritage Sites?",
-                "type": "Multiple Choice",
-                "options": [
-                    "Italy",
-                    "Spain",
-                    "China",
-                    "Greece"
-                ],
-                "answer": "China",
-                "explanation_answer": "China has 56 UNESCO World Heritage Sites, the most of any country. Italy follows with 55 sites, then Spain with 49, and Greece with 18."
-            }
-        ]
-    </code>
+
 </div>
+<script defer>
+    const copyButton = document.getElementById('copyButton');
+    const promptElement = document.getElementById('prompt');
+
+    copyButton.addEventListener('click', () => {
+        const textToCopy = promptElement.innerText;
+        navigator.clipboard.writeText(textToCopy)
+            .then(() => {
+                console.log('Text copied to clipboard!');
+            })
+            .catch(() => {
+                console.error('Failed to copy text to clipboard!');
+            });
+    });
+
+</script>
 <script>
     function removeNonLatin1Chars(str) {
         return str.replace(/[^\x00-\xFF]/g, '');
