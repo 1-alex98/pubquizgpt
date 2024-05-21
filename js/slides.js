@@ -38,7 +38,7 @@ for (const slideData of slidesList) {
                 <div class="parent">
                     <div class="text-container" style="max-height: 50vh; overflow: hidden">
                         <span class="text" style="max-height: 50vh; overflow: hidden">
-                            ${htmlEncode(slideData.question)} super long should work now somehow right? or not? Even longer should not really have any impact.. or does it? We could go even further a lot further what do you think. Will it make a difference?
+                            ${htmlEncode(slideData.question)}
                         </span>
                     </div>
                     <p style="font-size: 0.5em; color: grey">${htmlEncode(slideData.category)} / ${htmlEncode(slideData.type)}</p>
