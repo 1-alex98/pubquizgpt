@@ -28,23 +28,29 @@ let slidesDiv = document.getElementById("slides");
 for (const slideData of slidesList) {
     let wholeSection = document.createElement("section");
     let questionSection = document.createElement("section");
+    questionSection.style.maxHeight = "100%";
+    questionSection.style.height = "auto";
     questionSection.classList.add("slide");
 
     let number = 1;
     if (slideData.question.length >= 120) number = 2;
     let questionHtml = `
-				<div>
-					<h2 style="font-size: calc(50vh / calc(18 * ${number}))">${htmlEncode(slideData.question)}</h2>
-					<p style="font-size: 0.5em; color: grey">${htmlEncode(slideData.category)} / ${htmlEncode(slideData.type)}</p>
+                <div class="parent">
+                    <div class="text-container" style="max-height: 50vh; overflow: hidden">
+                        <span class="text" style="max-height: 50vh; overflow: hidden">
+                            ${htmlEncode(slideData.question)} super long should work now somehow right? or not? Even longer should not really have any impact.. or does it? We could go even further a lot further what do you think. Will it make a difference?
+                        </span>
+                    </div>
+                    <p style="font-size: 0.5em; color: grey">${htmlEncode(slideData.category)} / ${htmlEncode(slideData.type)}</p>
 				</div>
-				<div class="${slideData.options ? "fragment" : ""}">
+				<div style="flex-grow: 1;min-height: 100%" class="${slideData.options ? "fragment" : ""}">
 					<ul>`;
     if (slideData.options) {
         for (const option of slideData.options) {
             questionHtml += `<li>${htmlEncode(option)}</li>`;
         }
     }
-    questionHtml += `</ul></div>`;
+    questionHtml += `</ul></div></div>`;
     questionSection.innerHTML = questionHtml;
 
     wholeSection.appendChild(questionSection);
