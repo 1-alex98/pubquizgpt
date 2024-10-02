@@ -1,6 +1,6 @@
 
 function decodeJsonDataCookie() {
-    const cookieValue = document.cookie.replace(/(?:(?:^|.*;)jsonData=([^;]*))|(?:^.*)$/, "$1");
+    const cookieValue =  localStorage.getItem("jsonData");
 
     if (!cookieValue) {
         return null;
