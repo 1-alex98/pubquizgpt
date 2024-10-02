@@ -16,7 +16,7 @@ form.addEventListener('submit', (event) => {
     }
 
     // Set cookie with JSON data
-    document.cookie = `jsonData=${btoa(removeNonLatin1Chars(jsonData))}; path=/;`;
+    localStorage.setItem('jsonData',btoa(removeNonLatin1Chars(jsonData)));
 
     // Redirect to /slides.html
     window.location.href = "/slides.html";
