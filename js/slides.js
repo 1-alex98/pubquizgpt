@@ -36,8 +36,8 @@ for (const slideData of slidesList) {
     if (slideData.question.length >= 120) number = 2;
     let questionHtml = `
                 <div class="parent">
-                    <div class="text-container" style="max-height: 50vh; overflow: hidden">
-                        <span class="text" style="max-height: 50vh; overflow: hidden">
+                    <div class="text-container" style="max-height: 40vh; overflow: hidden">
+                        <span class="text" style="max-height: 40vh; overflow: hidden">
                             ${htmlEncode(slideData.question)}
                         </span>
                     </div>
