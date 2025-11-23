@@ -43,7 +43,7 @@ for (const slideData of slidesList) {
                     </div>
                     <p style="font-size: 0.5em; color: grey">${htmlEncode(slideData.category)} / ${htmlEncode(slideData.type)}</p>
 				</div>
-				<div style="flex-grow: 1;min-height: 100%" class="${slideData.options ? "fragment" : ""}">
+				<div style="flex-grow: 1;min-height: 100%" class="${slideData.options ? "" : ""}">
 					<ul>`;
     if (slideData.options) {
         for (const option of slideData.options) {
@@ -54,17 +54,17 @@ for (const slideData of slidesList) {
     questionSection.innerHTML = questionHtml;
 
     wholeSection.appendChild(questionSection);
-
-    let answerSection = document.createElement("section");
-    answerSection.classList.add("slide");
-
-    answerSection.innerHTML = `
+    if(slideData.answer) {
+        let answerSection = document.createElement("section");
+        answerSection.classList.add("slide");
+        answerSection.innerHTML = `
 					<h2>Answer</h2>
 					<p><b>${htmlEncode(slideData.answer)}</b></p>
 					<p><i>(${htmlEncode(slideData.explanation_answer)})</i></p>
 				  `;
 
-    wholeSection.appendChild(answerSection);
+        wholeSection.appendChild(answerSection);
+    }
     slidesDiv.appendChild(wholeSection);
 }
 
