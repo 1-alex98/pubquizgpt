@@ -60,13 +60,11 @@ for (const slideData of slidesList) {
         for (const imageUrl of slideData.images) {
             let imageSection = document.createElement("section");
             imageSection.classList.add("slide");
-            imageSection.setAttribute("data-background-image", htmlEncode(imageUrl));
+            //imageSection.setAttribute("data-background-image", htmlEncode(imageUrl));
             imageSection.setAttribute("data-background-size", "contain");
             imageSection.setAttribute("data-background-position", "center");
             imageSection.innerHTML = `
-                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
                     <img src="${htmlEncode(imageUrl)}" style="max-width: 100%; max-height: 100vh; object-fit: contain;" alt="Quiz Image">
-                </div>
             `;
             wholeSection.appendChild(imageSection);
         }
