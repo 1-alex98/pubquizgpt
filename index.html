@@ -47,8 +47,12 @@ Type: Free Answer
 Like Multiple Choice just do not provide options. The answer to the question should be short. A concept, name, event, year, number or similar.
 Example JSON: { "category": "Tech", "question": "What US state is Silicon Valley in?", "type": "Free Answer", "answer": "California", "explanation_answer": "Silicon Valley is a region in Northern California that is a global center for high technology and innovation." }
 
+Type: Image Question
+Include images to show with the question. Provide URLs to images in the "images" array. Each image will be displayed full-screen.
+Example JSON: { "category": "Art", "question": "Who painted this masterpiece?", "type": "Image Question", "images": [ "https://example.com/image1.jpg", "https://example.com/image2.jpg" ], "answer": "Vincent van Gogh", "explanation_answer": "This is 'The Starry Night', one of van Gogh's most famous works, painted in 1889." }
+
 Generate a JSON List!
-Use all question types, select the question type that fits best.
+Use all question types (Multiple Choice, Guessing Question, Free Answer, Image Question), select the question type that fits best.
 Generate questions for the following categories, one each:
 - Bonn's history
 - Computer Science (expert question)
@@ -68,6 +72,7 @@ Generate questions for the following categories, one each:
             <textarea name="jsonData" id="jsonData" rows="10" class="form-control" placeholder="Paste your JSON data here"></textarea>
         </div>
         <div class="text-center">
+            <button id="share" class="btn btn-primary">Share</button>
             <button type="submit" class="btn btn-primary">Convert to Slides</button>
         </div>
     </form>
@@ -75,5 +80,6 @@ Generate questions for the following categories, one each:
 </div>
 <script defer src="js/copyButton.js"></script>
 <script src="js/jsonData.js" defer></script>
+<script type="module" src="js/share.js"></script>
 </body>
 </html>
