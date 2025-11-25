@@ -35,19 +35,19 @@ for (const slideData of slidesList) {
     let number = 1;
     if (slideData.question.length >= 120) number = 2;
     let questionHtml = `
-                <div class="parent">
-                    <div class="text-container" style="max-height: 40vh; overflow: hidden">
-                        <span class="text" style="max-height: 40vh; overflow: hidden">
+                <div>
+                    <div class="parent" style="max-height: calc(var(--slide-height)*${slideData.options?0.4:0.6}); overflow: hidden; display: block">
+                        <span class="text" style="">
                             ${htmlEncode(slideData.question)}
                         </span>
                     </div>
                     <p style="font-size: 0.5em; color: grey">${htmlEncode(slideData.category)} / ${htmlEncode(slideData.type)}</p>
 				</div>
-				<div style="flex-grow: 1;min-height: 100%" class="${slideData.options ? "" : ""}">
-					<ul>`;
+				<div style="flex-grow: 1;max-height: calc(var(--slide-height)*0.3)" class="${slideData.options? "parent": ""}" id="options-list">
+					<ul class="text">`;
     if (slideData.options) {
         for (const option of slideData.options) {
-            questionHtml += `<li>${htmlEncode(option)}</li>`;
+            questionHtml += `<li class="text">${htmlEncode(option)}</li>`;
         }
     }
     questionHtml += `</ul></div></div>`;

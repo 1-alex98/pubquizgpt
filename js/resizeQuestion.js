@@ -1,11 +1,9 @@
 const isOverflown = ({ clientWidth, clientHeight, scrollWidth, scrollHeight }) => (scrollWidth > clientWidth) || (scrollHeight > clientHeight)
 
-const resizeText = ({ element, elements, minSize = 0.1, maxSize = 10, step = 0.1, unit = 'rem' }) => {
+const resizeText = ({ parent, element, elements, minSize = 0.1, maxSize = 10, step = 0.1, unit = 'rem' }) => {
     (elements || [element]).forEach(el => {
         let i = minSize
         let overflow = false
-
-        const parent = el.parentNode
 
         while (!overflow && i < maxSize) {
             el.style.fontSize = `${i}${unit}`
@@ -27,17 +25,15 @@ allParents.forEach(parent => {
             // get the text element, see the html markup
             // at the top for reference
             const parent = mutation.target
-            const textContainer = parent.firstElementChild
-            const text = textContainer.firstElementChild
+            const text = parent.querySelector('.text')
 
             // resize the text
-            resizeText({ element: text, step: 0.1 })
+            resizeText({ parent: parent, element: text, step: 0.1 })
         });
     })
 
     // let's observe only our required attributes
     observer.observe(parent)
-    const textContainer = parent.firstElementChild
-    const text = textContainer.firstElementChild
-    resizeText({ element: text, step: 1})
+    const text = parent.querySelector('.text')
+    resizeText({ parent: parent, element: text, step: 1})
 })
