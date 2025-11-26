@@ -17,6 +17,7 @@ function decodeJsonDataCookie() {
 }
 
 function htmlEncode(str) {
+    if(!str) return "";
     let tempDiv = document.createElement('div');
     tempDiv.innerText = str;
     return tempDiv.innerHTML;
@@ -64,7 +65,8 @@ for (const slideData of slidesList) {
             imageSection.setAttribute("data-background-size", "contain");
             imageSection.setAttribute("data-background-position", "center");
             imageSection.innerHTML = `
-                    <img src="${htmlEncode(imageUrl)}" style="max-width: 100%; max-height: 100vh; object-fit: contain;" alt="Quiz Image">
+                    <img src="${htmlEncode(imageUrl)}" style="max-width: 100%; max-height: calc(var(--slide-height)*0.8); object-fit: contain;" alt="Quiz Image">
+                    ${slideData.images.indexOf(imageUrl) === slideData.images.length - 1 ? '<p style="font-size: 14px; color: grey; margin-top: 10px;">Last image</p>' : ''}
             `;
             wholeSection.appendChild(imageSection);
         }
@@ -76,7 +78,7 @@ for (const slideData of slidesList) {
         answerSection.innerHTML = `
 					<h2>Answer</h2>
 					<p><b>${htmlEncode(slideData.answer)}</b></p>
-					<p><i>(${htmlEncode(slideData.explanation_answer)})</i></p>
+					${slideData.explanation_answer?`<p><i>(${htmlEncode(slideData.explanation_answer)})</i></p>`: ""}
 				  `;
 
         wholeSection.appendChild(answerSection);
